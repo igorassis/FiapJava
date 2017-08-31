@@ -1,8 +1,6 @@
-
 package br.com.fiap.modelo;
 
 import java.sql.Date;
-
 
 public class Cliente {
     private String cpf;
@@ -70,4 +68,5 @@ public class Cliente {
     }
     
     
+
 }
