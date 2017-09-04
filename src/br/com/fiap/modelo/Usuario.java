@@ -1,10 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.fiap.modelo;
 
+/**
+ *
+ * @author logonpf
+ */
 public class Usuario {
-private String cpf;
-private String nome;
-private String login;
-private String senha;
+    public String cpf;
+    public String nome;
+    public String login;
+    public String senha;
 
     public Usuario(String cpf, String nome, String login, String senha) {
         this.cpf = cpf;
@@ -33,7 +42,6 @@ private String senha;
     public String getSenha() {
         return senha;
     }
- 
     
- 
+        
 }

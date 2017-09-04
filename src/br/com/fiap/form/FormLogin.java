@@ -9,7 +9,7 @@ package br.com.fiap.form;
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.modelo.Usuario;
 import java.awt.event.KeyEvent;
-import static javax.swing.JOptionPane.*;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -59,11 +59,6 @@ public class FormLogin extends javax.swing.JFrame {
         txtLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
-            }
-        });
         txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyPressed(evt);
@@ -148,17 +143,9 @@ public class FormLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFinalizarActionPerformed
-
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
         pesquisar();
     }//GEN-LAST:event_btnConectarActionPerformed
-
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -166,17 +153,21 @@ public class FormLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSenhaKeyPressed
 
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
     private void pesquisar() {
         String login = txtLogin.getText();
         String senha = new String(txtSenha.getPassword());
         Usuario usuario = new Usuario(login, senha);
         UsuarioDAO dao = new UsuarioDAO();
-        if(dao.pesquisarUsuario(usuario)){
+        if(dao.pesquisarUsuario(usuario)) {
             this.dispose();
             new FormCliente().setVisible(true);
         }
-        else{
-            showMessageDialog(this,"Login ou Senha incorretos");
+        else {
+            JOptionPane.showMessageDialog(this, "Login ou senha incorretos");
         }
     }
     
@@ -217,4 +208,6 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtLogin;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
+
+    
 }
