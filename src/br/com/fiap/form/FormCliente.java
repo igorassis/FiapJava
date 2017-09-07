@@ -393,12 +393,25 @@ public class FormCliente extends javax.swing.JFrame {
             Date data = new Date(dataFormatada.parse(nascimento).getTime());
             Cliente cliente = new Cliente(cpf, nome, endereco, data, fone, caminho);
             ClienteDAO dao = new ClienteDAO();
-            dao.inserir(cliente);
+            if(dao.inserir(cliente)){
+                JOptionPane.showMessageDialog(this, "Dados inseridos com sucesso!");
+                limparCampos();
+                atualizarTabela();
+            }
         } catch (ParseException ex) {
             Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void limparCampos(){
+        txtCPF.setText("");
+        txtEndereco.setText("");
+        txtFone.setText("");
+        txtNascimento.setText("");
+        txtNome.setText("");
+        lblFoto.setIcon(null);
+    }
+    
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         String cpf = (String)txtCPF.getValue();
         if (cpf.equals("")) {

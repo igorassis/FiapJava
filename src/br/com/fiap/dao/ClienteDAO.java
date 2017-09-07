@@ -28,7 +28,8 @@ public class ClienteDAO {
     private ResultSet rs;
     private String sql;
     
-    public void inserir(Cliente cliente) {
+    public boolean inserir(Cliente cliente) {
+        boolean status = false;
         sql = "insert into java_cliente values (?, ?, ?, ?, ?, ?)";
         try {
             connection = Conexao.getConnection();
@@ -40,9 +41,11 @@ public class ClienteDAO {
             p.setString(5, cliente.getFone());
             p.setString(6, cliente.getFoto());
             p.execute(); //p.executeUpdate();
+            status = true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir cliente\n"+ex);
-        }        
+        }
+        return status;
     }
     
     public Cliente pesquisar(String cpf) {
