@@ -259,6 +259,11 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
         tabela.getTableHeader().setReorderingAllowed(false);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
             tabela.getColumnModel().getColumn(0).setResizable(false);
@@ -458,6 +463,28 @@ public class FormCliente extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         atualizarTabela();
     }//GEN-LAST:event_formWindowOpened
+
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        ImageIcon imagem;
+        int linha = tabela.getSelectedRow();
+        if (linha != -1) {
+            txtCPF.setText(matriz[linha][0]);
+        	    txtNome.setText(matriz[linha][1]);
+            txtEndereco.setText(matriz[linha][2]);
+            txtNascimento.setText(matriz[linha][3]);
+            txtFone.setText(matriz[linha][4]);            
+            if (matriz[linha][5] != null && !matriz[linha][5].equals("")) {
+                caminho = matriz[linha][5];
+                imagem = new ImageIcon(caminho);                
+            }
+            else {
+                caminho = null;
+                imagem = new ImageIcon();
+            }  
+            lblFoto.setIcon(imagem);
+        }
+     
+    }//GEN-LAST:event_tabelaMouseClicked
 
     /**
      * @param args the command line arguments
