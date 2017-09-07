@@ -12,6 +12,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -85,4 +87,35 @@ public class ClienteDAO {
 
     }
     
+    public List<Cliente> listarCliente() {
+        List<Cliente> lista = null;
+        connection = Conexao.getConnection();
+        sql = "select * from java_cliente";
+        try {
+            p = connection.prepareStatement(sql);
+            rs = p.executeQuery();
+            lista = gerarLista(rs);
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao pesquisar todos os clientes\n"+e);
+        }
+        return lista;
+    }
+
+    public List<Cliente> gerarLista(ResultSet rs) throws SQLException {
+        List<Cliente> lista = new ArrayList();
+        String cpf, nome, endereco, foto, fone;
+        Date nascimento;
+        while(rs.next()) {
+            cpf = rs.getString("cpf");
+            nome = rs.getString("nome");
+            endereco = rs.getString("endereco");
+            nascimento = rs.getDate("nascimento");
+            fone = rs.getString("fone");
+            foto = rs.getString("foto");
+            lista.add(new Cliente(cpf, nome, endereco, nascimento, fone, foto));            
+        }
+        return lista;
+    }
+
 }
