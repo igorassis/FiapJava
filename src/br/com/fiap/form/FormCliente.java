@@ -443,8 +443,9 @@ public class FormCliente extends javax.swing.JFrame {
         new FormLogin().setVisible(true);
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-      try {
+    private Cliente getCampos(){
+        Cliente cliente = null;
+        try {
             String cpf = txtCPF.getText();
             String nome = txtNome.getText();
             String endereco = txtEndereco.getText();
@@ -452,12 +453,24 @@ public class FormCliente extends javax.swing.JFrame {
             String nascimento = txtNascimento.getText();
             dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
             Date data = new Date(dataFormatada.parse(nascimento).getTime());
-            Cliente cliente = new Cliente(cpf, nome, endereco, data, fone, caminho);
-            ClienteDAO dao = new ClienteDAO();
-            dao.alterar(cliente);
+            cliente = new Cliente(cpf, nome, endereco, data, fone, caminho);
         } catch (ParseException ex) {
             Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return cliente;
+    }
+    
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+       int resp = JOptionPane.showConfirmDialog(this, "Você realmente deseja alterar os dados?");
+       if(resp == JOptionPane.YES_OPTION){
+           Cliente cliente = getCampos();
+           ClienteDAO dao = new ClienteDAO();
+           if(dao.alterar(cliente)){
+               JOptionPane.showMessageDialog(this, "Dados Alterados com sucesso!");
+               limparCampos();
+               atualizarTabela();
+           }
+       }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

@@ -71,12 +71,12 @@ public class ClienteDAO {
         return aux;
     }
 
-    public void alterar(Cliente cliente){
+    public boolean alterar(Cliente cliente){
+        boolean status = false;
         sql = "update java_usuario set nome = ?, endereco = ?, nascimento = ?, fone = ?, caminho = ? where cpf = ?";
         try {
             connection = Conexao.getConnection();
-            p = connection.prepareStatement(sql);
-            p = connection.prepareStatement(sql);            
+            p = connection.prepareStatement(sql);          
             p.setString(1, cliente.getNome());
             p.setString(2, cliente.getEndereco());
             p.setDate(3, cliente.getNascimento());
@@ -84,10 +84,11 @@ public class ClienteDAO {
             p.setString(5, cliente.getFoto());
             p.setString(6, cliente.getCpf());
             p.execute();
+            status = true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar dados do cliente no banco\n"+ex);
         }
-
+        return status;
     }
     
     public List<Cliente> listarCliente() {
