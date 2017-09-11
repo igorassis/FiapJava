@@ -73,7 +73,7 @@ public class ClienteDAO {
 
     public boolean alterar(Cliente cliente){
         boolean status = false;
-        sql = "update java_usuario set nome = ?, endereco = ?, nascimento = ?, fone = ?, caminho = ? where cpf = ?";
+        sql = "update java_cliente set nome = ?, endereco = ?, nascimento = ?, fone = ?, foto = ? where cpf = ?";
         try {
             connection = Conexao.getConnection();
             p = connection.prepareStatement(sql);          
@@ -120,6 +120,21 @@ public class ClienteDAO {
             lista.add(new Cliente(cpf, nome, endereco, nascimento, fone, foto));            
         }
         return lista;
+    }
+    
+    public boolean excluir(String cpf){
+        boolean status = false;
+        sql = "delete from java_cliente where cpf = ?";
+        try{
+            connection = Conexao.getConnection();
+            p = connection.prepareStatement(sql);
+            p.setString(1, cpf);
+            p.execute();
+            status = true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir cliente!");
+        }
+        return status;
     }
 
 }

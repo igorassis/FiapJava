@@ -232,6 +232,11 @@ public class FormCliente extends javax.swing.JFrame {
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
 
@@ -475,8 +480,19 @@ public class FormCliente extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         atualizarTabela();
+        desabilitarBotao();
     }//GEN-LAST:event_formWindowOpened
 
+    private void desabilitarBotao(){
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }
+    
+    private void habilitarBotao(){
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+    }
+    
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         ImageIcon imagem;
         int linha = tabela.getSelectedRow();
@@ -495,9 +511,24 @@ public class FormCliente extends javax.swing.JFrame {
                 imagem = new ImageIcon();
             }  
             lblFoto.setIcon(imagem);
+            habilitarBotao();
         }
      
     }//GEN-LAST:event_tabelaMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        String cpf = txtCPF.getText();
+        int resp = JOptionPane.showConfirmDialog(this, "Você realmente deseja excluir esses dados?");
+        if(resp == JOptionPane.YES_OPTION){
+            Cliente cliente = getCampos();
+            ClienteDAO dao = new ClienteDAO();
+            if(dao.excluir(cpf)){
+                JOptionPane.showMessageDialog(this, "Dados Excluidos com sucesso!");
+                limparCampos();
+                atualizarTabela();
+            }
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
